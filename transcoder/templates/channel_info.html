@@ -1,0 +1,129 @@
+<!-- <div class="status">
+    <div class="ffmpeg_status">Статус ffmpeg</div>
+    <div class="astra_status">Статус astra</div>
+</div>  --> 
+
+{% for info in ch_info %}
+
+<div class="log">
+    <textarea class="log_text" rows="3">{{log}}</textarea>
+    <a class="btn btn-default" href="/show_log/{{info.id}}" role="button" target="_blank">
+        <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+    </a>
+    <span><b>{{params}}</b></span>
+</div> 
+
+<div class="ch_info">
+    
+
+        <!-- *******************  Статус "Остановлен" ***************  -->
+        
+        {% ifequal info.status 0 %}
+
+        <b>Имя: </b><span>{{info.name}}</span> 
+        <span name="name" class="glyphicon glyphicon-pencil edit" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>SID: </b><span>{{info.sid}}</span>  
+        <span name="sid" class="glyphicon glyphicon-pencil edit" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>Входящий мультикаст:</b><span>{{info.multicast_in}}</span> 
+        <span name="multicast_in" class="glyphicon glyphicon-pencil edit" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>Исходящий мультикаст: </b><span>{{info.multicast_out}}</span> 
+        <span name="multicast_out" class="glyphicon glyphicon-pencil edit" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>Битрейт: </b><span>{{info.bitrate}}</span> 
+        <span name="bitrate" class="glyphicon glyphicon-pencil edit" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>PCR период: </b><span>{{info.pcr_period}}</span> 
+        <span name="pcr_period" class="glyphicon glyphicon-pencil edit" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>Опции кодека: </b><span>{{info.command}}</span>
+        <span name="command" class="glyphicon glyphicon-pencil edit" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        {% endifequal %}
+
+        <!-- *******************  Статус "Запущен"  ***************  -->
+
+        {% ifequal info.status 1 %}
+        
+        <b>Имя: </b><span>{{info.name}}</span> 
+        <span name="name" class="glyphicon glyphicon-pencil edit hiden-element" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>SID: </b><span>{{info.sid}}</span>  
+        <span name="sid" class="glyphicon glyphicon-pencil edit hiden-element" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>Входящий мультикаст:</b><span>{{info.multicast_in}}</span> 
+        <span name="multicast_in" class="glyphicon glyphicon-pencil edit hiden-element" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>Исходящий мультикаст: </b><span>{{info.multicast_out}}</span> 
+        <span name="multicast_out" class="glyphicon glyphicon-pencil edit hiden-element" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>Битрейт: </b><span>{{info.bitrate}}</span> 
+        <span name="bitrate" class="glyphicon glyphicon-pencil edit hiden-element" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>PCR период: </b><span>{{info.pcr_period}}</span> 
+        <span name="pcr_period" class="glyphicon glyphicon-pencil edit hiden-element" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>Опции кодека: </b><span>{{info.command}}</span>
+        <span name="command" class="glyphicon glyphicon-pencil edit hiden-element" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        {% endifequal %}
+
+        <!-- *******************  Статус "Выполняется" ***************  -->
+
+        {% ifequal info.status 2 %}
+        
+        <b>Имя: </b><span>{{info.name}}</span> 
+        <span name="name" class="glyphicon glyphicon-pencil edit hiden-element" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>SID: </b><span>{{info.sid}}</span>  
+        <span name="sid" class="glyphicon glyphicon-pencil edit hiden-element" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>Входящий мультикаст:</b><span>{{info.multicast_in}}</span> 
+        <span name="multicast_in" class="glyphicon glyphicon-pencil edit hiden-element" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>Исходящий мультикаст: </b><span>{{info.multicast_out}}</span> 
+        <span name="multicast_out" class="glyphicon glyphicon-pencil edit hiden-element" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>Битрейт: </b><span>{{info.bitrate}}</span> 
+        <span name="bitrate" class="glyphicon glyphicon-pencil edit hiden-element" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>PCR период: </b><span>{{info.pcr_period}}</span> 
+        <span name="pcr_period" class="glyphicon glyphicon-pencil edit hiden-element" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>Опции кодека: </b><span>{{info.command}}</span>
+        <span name="command" class="glyphicon glyphicon-pencil edit hiden-element" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        {% endifequal %} 
+        
+        <!-- *******************  Статус "Ошибка" ***************  -->
+        
+        {% ifequal info.status 3 %}
+
+        <b>Имя: </b><span>{{info.name}}</span> 
+        <span name="name" class="glyphicon glyphicon-pencil edit" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>SID: </b><span>{{info.sid}}</span>  
+        <span name="sid" class="glyphicon glyphicon-pencil edit" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>Входящий мультикаст:</b><span>{{info.multicast_in}}</span> 
+        <span name="multicast_in" class="glyphicon glyphicon-pencil edit" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>Исходящий мультикаст: </b><span>{{info.multicast_out}}</span> 
+        <span name="multicast_out" class="glyphicon glyphicon-pencil edit" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>Битрейт: </b><span>{{info.bitrate}}</span> 
+        <span name="bitrate" class="glyphicon glyphicon-pencil edit" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>PCR период: </b><span>{{info.pcr_period}}</span> 
+        <span name="pcr_period" class="glyphicon glyphicon-pencil edit" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        <b>Опции кодека: </b><span>{{info.command}}</span>
+        <span name="command" class="glyphicon glyphicon-pencil edit" onclick="editChannel(this)" aria-hidden="true"></span><br>
+
+        {% endifequal %}
+
+</div>
+
+{% endfor %}

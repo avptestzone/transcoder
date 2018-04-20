@@ -1,0 +1,30 @@
+  {% extends 'base.html' %}
+  {% block body %}
+    <div class="row top-buffer">
+      <div class="col-xs-4 col-xs-offset-4 back-input">
+        <form action='' method='POST'> {% csrf_token %}
+          <fieldset>
+            <legend>trans_1</legend>
+            <div class="form-group">
+              <label for="inputLogin">Логин</label>
+              <input id="inputLogin" name='login' placeholder="Введите логин" class="form-control" value="{{form.login.value}}">
+              {% for error in form.login.errors %}
+                   <span style = "color:red">{{ error }}</span>
+              {% endfor %}
+            </div>
+            <div class="form-group">
+              <label for="inputPassword">Пароль</label>
+              <input type="password" id="inputPassword" name='password' placeholder="Введите пароль" class="form-control" value="{{form.password.value}}">
+              {% for error in form.password.errors %}
+                   <span style = "color:red">{{ error }}</span>
+              {% endfor %}
+            </div>
+            <div class="error">
+              {{deny_auth}}<p>
+            </div>
+            <button type="submit" class="btn btn-default">Войти</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  {% endblock body %}

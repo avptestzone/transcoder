@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block body %}
+
+<div class="row top-buffer-add-ch">
+    <div class="col-xs-6 ">
+
+        <form action='' method='POST'> {% csrf_token %}
+        <fieldset>
+            <legend>Новый канал</legend>
+            <div class="form-group">
+                <label for="inputName">Имя</label>
+                <input id="inputName" name='name' placeholder="Введите имя" class="form-control" value="{{form.name.value}}" oninput="fill(this)">
+                {% for error in form.name.errors %}
+                   <span style = "color:red">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                <label for="inputSid">SID</label>
+                <input id="inputSid" name='sid' placeholder="Введите SID" class="form-control" value="{{form.sid.value}}" oninput="fill(this)">
+                {% for error in form.sid.errors %}
+                   <span style = "color:red">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                <label for="inputMin">Входящий мультикаст</label>
+                <input id="inputMin" name='multicast_in' placeholder="225.x.x.x:port" class="form-control" value="{{form.multicast_in.value}}" oninput="fill(this)">
+                {% for error in form.multicast_in.errors %}
+                   <span style = "color:red">{{ error }}</span>
+                {% endfor %}
+                {% if m_error %}
+                    <span style = "color:red">Входной и выходной мультикасты должны отличаться</span>
+                {% endif %}    
+            </div>
+
+            <div class="form-group">
+                <label for="inputMout">Исходящий мультикаст</label>
+                <input id="inputMout" name='multicast_out' placeholder="225.x.x.x:port" class="form-control" value="{{form.multicast_out.value}}" oninput="fill(this)">
+                {% for error in form.multicast_out.errors %}
+                   <span style = "color:red">{{ error }}</span>
+                {% endfor %}
+                {% if m_error %}
+                    <span style = "color:red">Входной и выходной мультикасты должны отличаться</span>
+                {% endif %} 
+            </div>
+
+            <div class="form-group">
+                <label for="inputBitrate">Битрейт мультикаста (Мбит)</label>
+                <input id="inputBitrate" name='bitrate' placeholder="2<x<10" class="form-control" value="{{form.bitrate.value}}" oninput="fill(this)">
+                {% for error in form.bitrate.errors %}
+                   <span style = "color:red">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                <label for="inputPcr">PCR_period</label>
+                <input id="inputPcr" name='pcr_period' placeholder="10<x<100" class="form-control" value="{{form.pcr_period.value}}" oninput="fill(this)">
+                {% for error in form.pcr_period.errors %}
+                   <span style = "color:red">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                <label for="inputCommand">Команда видео/аудио опций</label>
+                <div class="command">
+                <div> ffmpeg -hide_banner -re -i http://127.0.0.1:8000/udp/{0}#pnr={1}
+                    <span>ffmpeg -hide_banner -re -i http://127.0.0.1:8000/udp/<span class="multicast_in"></span>
+                    #pnr=<span class="sid"></span></span>
+                </div>                
+                
+                {% if form.command.value %}
+                    <textarea id="inputCommand" name='command' class="form-control" rows=3>{{form.command.value}}</textarea>    
+                {% else %}
+                    <textarea id="inputCommand" name='command' class="form-control" rows=3>-c:v mpeg2video -b:v 4M -minrate:v 4M -maxrate:v 4M -bufsize 1835k -s 720x576 -aspect 4:3 -r 25 -pix_fmt yuv420p  -flags +ildct+ilme -qmax 20 -qdiff 2 -g 100 -keyint_min 4 -c:a mp2 -ac 2 -b:a 128k -ar 44100</textarea>
+                {% endif %}
+                
+                <div>
+                    <span>
+                    -map 0:p:<span class="sid"></span>:0 -map 0:p:<span class="sid"></span>:1 -mpegts_service_id <span class="sid"></span> -mpegts_pmt_start_pid 2048 -metadata service_provider='Ufanet' -metadata service_name=<span class="name"></span> -muxrate <span class="bitrate"></span>M -threads 4 -flush_packets 0 -pcr_period <span class="pcr_period"></span> -tables_version 31 -f mpegts udp://<span class="multicast_out"></span>?pkt_size=1316&buffer_size=65535
+                    </span>
+                </div> 
+                </div>
+                {% for error in form.command.errors %}
+                   <span style = "color:red">{{ error }}</span>
+                {% endfor %}
+            </div>
+ 
+            <button type="submit" class="btn btn-success">Добавить</button>
+            <a href="/channels" class="btn btn-warning active" role="button">Отмена</a>
+        </fieldset>
+        </form>
+    
+    </div>
+</div>        
+    
+{% endblock body %}

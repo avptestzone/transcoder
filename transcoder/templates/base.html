@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>transcoder-orsk</title>
+  {% load staticfiles %}
+	<link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+	<link href="{% static "main.css" %}" rel="stylesheet">
+	<script src="{% static "main.js" %}"></script>
+</head>
+<body>
+    <div class="container">
+    {% block body %}{% endblock body %}
+    </div>
+    <div class="footer">
+    </div>
+<script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
+</body>
+
+</html>

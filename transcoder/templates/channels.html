@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block body %}
+        
+    <div class="row">
+    	<div class="col-md-3 col-md-offset-9 text-center">
+            <h4>Состояние</h4>
+    		<div class="back-processor">
+                load average: {{load}}
+            </div>
+            <div class="back-processor">
+                astra-relay: запущен 
+            </div>
+    	</div>
+    </div>
+
+    <div class="row">
+    <div class="col-md-12 top-table">
+    
+    <a href="/add_channel" class="btn btn-default" role="button">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Добавить 
+    </a>
+    {% for channel in channels %}
+
+    {% ifequal channel.status 0 %}
+    <div id="{{ channel.id }}" class="channel" style="background:#C4C8EB">
+    {% endifequal %}
+    {% ifequal channel.status 1 %}
+    <div id="{{ channel.id }}" class="channel" style="background:#94E498">
+    {% endifequal %}
+    {% ifequal channel.status 2 %}
+    <div id="{{ channel.id }}" class="channel" style="background:#C4C8EB">
+    {% endifequal %}
+    {% ifequal channel.status 3 %}
+    <div id="{{ channel.id }}" class="channel" style="background:#C8826F">
+    {% endifequal %}
+
+        <div class="ch_face">
+        <div class="ch_name"><h4>{{channel.name}}</h4></div>
+        <div class="ch_buttons">
+            {% ifequal channel.status 0 %}
+                <button type="button" class="btn btn-default play" onclick="runChannelPhase1(this)" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default stop disabled" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default delete" onclick="deleteChannelPhase1(this)" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+            {% endifequal %}
+
+            {% ifequal channel.status 1 %}
+                <button type="button" class="btn btn-default btn-green play disabled" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default stop" onclick="stopChannelPhase1(this)" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default delete disabled" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+            {% endifequal %}
+
+            {% ifequal channel.status 2 %}
+                <button type="button" class="btn btn-default btn-green play disabled" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default stop disabled" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default delete disabled" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>                
+            {% endifequal %} 
+
+            {% ifequal channel.status 3 %}
+                <button type="button" class="btn btn-default play" onclick="runChannelPhase1(this)" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default stop disabled" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default delete" onclick="deleteChannelPhase1(this)" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+                
+            {% endifequal %}
+
+        </div>
+        
+        <div class="ch_status">
+        {% ifequal channel.status 0 %}
+            <h4>Остановлен</h4>
+        {% endifequal %}
+
+        {% ifequal channel.status 1 %}
+            <h4>&nbsp;&nbsp;&nbsp;Запущен</h4>
+        {% endifequal %}
+
+        {% ifequal channel.status 2 %}
+            <div class="progress pr_br">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">Выполняется...</div>
+            </div>    
+        {% endifequal %}
+
+        {% ifequal channel.status 3 %}
+            <h4>&nbsp;&nbsp;&nbsp;&nbsp;Ошибка</h4>
+        {% endifequal %}
+
+        </div>
+
+        <div class='ch_down' onclick="showInfo(this)">
+            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> 
+        </div>
+        <div class="clear"></div>
+    </div>
+    
+    </div>
+    {% endfor %}
+
+   </div>
+   </div>
+
+{% endblock body %}
